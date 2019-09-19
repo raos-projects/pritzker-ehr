@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<title>Help and About</title>
+	</head>
+	
+	<body>
+		<h1>Pritzker Electronic Hosting Record v1.4</h1>
+		<h3>Version Release Date: 8/9/2018</h3>
+		<h3>Author: Saieesh Rao, Pritzker School of Medicine '21</h3>
+		
+		<h2>Instructions</h2>
+		<h3>I. Startup</h3>
+			<ol>
+				<li>Make sure you have the Java installed on your computer, with the most recent version possible (at least version 1.8). You can download the Java Runtime Environment (JRE) at http://www.oracle.com/technetwork/java/javase/downloads/index.html. If prompted by your computer, you may need to download a Java JDK (Java Developer's Kit) instead of the JRE.</li>
+				<li>Starting the program will be different depending on your computer's operating system:
+				<ul>
+					<li>For Windows users: double click the file runWindows.bat that's included in the distribution .zip file.</li>
+					<li>For Mac users: double click the pritzkerhosting.jar file.</li>
+					<li>For other OS users: if you're not using Windows or Mac, you're probably technical enough to figure out how to run a .jar file on your system.</li>
+				</ul>
+				<li>A popup will appear prompting you to enter the password for pritzkerhosting@gmail.com. This is to allow the app to login to the Gmail account to send emails on your behalf.</li>
+				<li>If this is your first time using the app, a browser window will appear prompting you to log into a Google Account. Choose pritzkerhosting@gmail.com. This is to allow access to the Pritzker Hosting Google Drive. Once you give permission for the app to read and write to your Google Sheets, your credentials will be saved to a file on your computer and you won't be asked to give permission again (unless you end up deleting the credentials file, which is no big deal since you can give permission again)</li>
+			</ol>
+		<h3>II. Brief Guide</h3>
+			<ul>
+				<li>Use top menu bar to choose the type of email.</li>
+				<li>Pritzker Hosting Helper will keep track of each applicant's hosting status after sending emails.</li>
+				<li>Right-click an interviewee in the tables to edit their status in the hosting process.</li>
+				<li>Applicants whose hosting date has passed will not show up in the "Awaiting Confirmation" or "Awaiting Pairing" tables.</li>
+				<li>User can edit program presets in the sheet 'PritzkerHostingHelper_PATH' on the pritzkerhosting Google Drive.</li>
+				<ul>
+					<li>Link: https://docs.google.com/spreadsheets/d/1fWnFRurCA23sNTy5lIc35qXSoZ165DM4tfu0RJv2COk/</li>
+					<li>NEVER, EVER DELETE PritzkerHostingHelper_PATH. The program reads the presets from the exact URL and can't work without it. New spreadsheets won't ever have the same URL.</li>
+					<li>There are 5 presets that can be edited:</li>
+					<ol>
+						<li>spreadsheetID: The long alphanumeric code in the URL of the current Hosting Request spreadsheet</li>
+							<ul>
+								<li>For example, the spreadsheetID for PritzkerHostingHelper_PATH would be 1fWnFRurCA23sNTy5lIc35qXSoZ165DM4tfu0RJv2COk</li>
+							</ul>
+						<li>Plea Signature: The names of all the hosting coordinators that are used to sign each plea email </li>
+						<li>Email Body for 'Receipt of Hosting Request' emails</li>
+						<li>Email Body for 'Host-Interviewee Pairing' emails</li>
+						<li>Email Body for 'Hosting Plea to Class Lists' emails</li>
+					</ol>
+					<li>The presets for the spreadsheetID and the Plea Signature will likely have to be edited at the beginning of each school year (to reflect the new Google Sheet being used to store Interviewee Info and the new identities of the hosting coordinators). Other presets can be edited at whim or left alone.</li>
+				</ul>
+				<li>Use the following Merge Tags in your preset email bodies to personalize them:</li>
+				<ol>
+					<li>[INTERVIEWEE NAME], the first name of the interviewee </li>
+					<li>[HOST NAME], the full name of the medical student host</li>
+					<li>[HOSTING DATE], the date of hosting (usually the night before the interview)</li>
+					<li>[PREFERENCE TABLE], a table containing the stated preferences of the interviewee (only for the receipt email)</li>
+					<li>[SIGNATURE], the name of the person sending the email</li>
+					<ul>
+						<li>If sending a plea email, then [SIGNATURE] is replaced with the names of all the hosting coordinators (as defined in the presets)</li>
+						<li>[PLEA TABLE], the auto-generated table of upcoming interviewees (only for the plea email)</li>
+					</ul>
+				</ol>
+				<li>Emails are encoded using HTML tags, so any HTML tags (such as for bold, italics, hyperlinks) can be incorporated into the preset email bodies to format text in the emails.</li>
+				<ul>
+					<li>Word of Advice: always launch emails individually and inspect them the first time you modify any of the presets. You never know if you made a typo (especially in a Merge Tag)!</li>
+				</ul>
+				<li>Emails can only be sent to applicants for whom all the necessary data (host name, host email address, etc.). All necessary data is provided by the applicant for confirmation emails, so those may be sent right away. Host Pairing emails will be sent only when all necessary data is supplied ON THE TABLE IN THE APP; the data doesn't need to be saved to the Google spreadsheet before sending. Upon sending emails through the app, either individually or in bulk, the edits will be saved to the Google Sheet.</li>
+				<li>The "Launch All" and "Launch with Individual Review" buttons will pick the applicants with all necessary data for sending emails. No errors will result from having interviewees on the table with only partially filled rows; those interviewees will be skipped for the time being. When either launch button is clicked, all edits to the table values are saved to the Google Sheet.</li>
+				<li>If manually editing the Google Sheet, please note that it is necessary to manually update column M with the numeric hosting status of each interviewee. The hosting status codes are as follows:</li>
+				<ul>
+					<li>0= has submitted a request and is awaiting a receipt of request/confirmation email</li>
+					<li>1= has received a receipt of their hosting request, and is patiently awaiting a host pairing</li>
+					<li>2= has been successfully paired with a host via email</li>
+					<li>3= request has been removed due to cancellations, or because the request was a duplicate</li>
+				</ul>
+			</ul>
+        <h3>III. Updates</h3>
+        <h4>Since Version 1.3</h4>
+            <p>In version 1.3, there was a bug in which interviewees would be marked on Google Sheets as having completed a confirmation stage even if their email was not sent out due to a Gmail error. These Gmail errors usually occured when  large numbers of emails (e.g., greater than 15) were sent simultaneously using the "Launch All" button. This bug has been resolved in version 1.4. Now, if a Gmail error prevents an email from being sent, the row on the Google Sheet for the particular interviewee will not be updated. The user may then restart Pritzker EHR and try sending the emails again.</p>
+        <h4>Since Version 1.2</h4>
+			<p>In no particular order, users may now:</p>
+			<ul>
+				<li>edit interviewee info and hosting status by right clicking them in the JTable and choosing from editing options in a contextual pop-up menu</li>
+				<li>refresh the table and redownload data from Google Drive by choosing that option in contextual pop-up menu</li>
+				<li>view all completed hosting requests in a fourth table (reached by choosing the new "View Completed Requests" option in the top menu). This should resolve issues where an interviewee is accidentally marked as completed through the contextual pop-up menu but could no longer be accessed through the program.</li>
+				<li>include a table containing the interviewees' hosting preferences in their hosting emails through the new "[PREFERENCE TABLE]" Merge Tag. This should help interviewees spot mistakes in their hosting submission</li>
+			</ul>
+			<p>Additionally, users will no longer see a pop-up dialog appear stating "All requested messages sent!" upon clicking the "Launch with Individual Review" or "Launch All" buttons. This message was removed because it usually appeared before the messages were actually sent. Users will still be able to see the progress and completion of the message-sending process via the progress bar at the bottom of the window. The main window and the warm-up progress bar are now centered on the screen at startup, instead of appearing in the screen's top left corner.</p>
+			<p>The algorithm for getting the interviewee's first name from their full name now includes support for identifying their preferred name. If an interviewee includes their preferred name in parentheses or quotation marks, the enclosed name will be assumed to be the first name. Otherwise, the default operation is still to use the first token in the full name as the first name.</p>
+			<p>The "Help and About" section is now read from a .html file and displayed as such.</p>
+		<h3>IV. Technical Support</h3>
+			<p>This program was compiled in Java version 1.8. Users should thus have java 1.8 or a newer Java version installed to run this program.</p>
+			<p>The source code is included in the jar file. For developers, please review the documentation in javadocs/index.html.</p>
+			<p>Contact me with program issues at saieesh@uchicago.edu</p>
+	</body>
+</html>
