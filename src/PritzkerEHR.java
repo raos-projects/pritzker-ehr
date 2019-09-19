@@ -33,6 +33,7 @@ import javax.swing.event.ListSelectionListener;
  * <p>Created by Saieesh Rao, MD '21 beginning on 9/8/2017.
  * Code for boolean sendMail(String subj, String to, String cc, String msg)
  * adapted from https://ps06756.wordpress.com/2017/08/17/how-to-send-email-through-gmail-programmatically/</p>
+ *
  * @author Saieesh Rao, Pritzker School of Medicine '21
  * @version 1.4
  */
@@ -125,7 +126,6 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
             };
             pane.createDialog(this,"Pritzker EHR").setVisible(true);
             Object selectedButton = pane.getValue();
-            //Object passwordInput = JOptionPane.showInputDialog(this, "Password for pritzkerhosting@gmail.com?", "Pritzker EHR", JOptionPane.QUESTION_MESSAGE, getWindowIcon(), null, null);
             if (selectedButton == null || selectedButton.equals("Cancel")) {
                 System.exit(0);
             }
@@ -204,10 +204,8 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
                 }
             }
             else if (source.equals(messageType)) {
-                //if(askClassMessage.getText().trim().equals("")){    //plea somehow uninitialized because of threading issues
                 SwingWorker pleaWriter = new PleaWorker(sheetsHandler.getUpcomingPairingArray());
                 pleaWriter.execute();
-                //}
                 refreshCenterPanel();
             }
         }
@@ -229,16 +227,12 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
         JTable jtD_temp = sheetsHandler.getDoneJTable();
         jtR.setModel(jtR_temp.getModel());
         sheetsHandler.conformThreeColumnTable(jtR);
-        //jtR.setComponentPopupMenu(jtR_temp.getComponentPopupMenu());
         jtP.setModel(jtP_temp.getModel());
         sheetsHandler.conformFiveColumnTable(jtP);
-        //jtP.setComponentPopupMenu(jtP_temp.getComponentPopupMenu());
         jtI.setModel(jtI_temp.getModel());
         sheetsHandler.conformThreeColumnTable(jtI);
-        //jtI.setComponentPopupMenu(jtI_temp.getComponentPopupMenu());
         jtD.setModel(jtD_temp.getModel());
         sheetsHandler.conformFiveColumnTable(jtD);
-        //jtD.setComponentPopupMenu(jtD_temp.getComponentPopupMenu());
         SwingWorker pleaWriter = new PleaWorker(sheetsHandler.getUpcomingPairingArray());
         pleaWriter.execute();
     }
@@ -251,22 +245,14 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
      * */
     public void propertyChange(PropertyChangeEvent pce){
         Object source = pce.getSource();
-        //System.out.println(source);
         if(source instanceof StartupWorker && ((StartupWorker)source).getProgress() == 100){
-            //System.out.println("pce StartupWorker");
             fluff.dispatchEvent(new WindowEvent(fluff, WindowEvent.WINDOW_CLOSING));
         }
         else if(source instanceof EmailWorker){
             refreshProgressBar();
-//            if(((EmailWorker)source).getProgress() == 100){
-//                JOptionPane.showMessageDialog(this, "All requested emails sent!", "Pritzker EHR says:", JOptionPane.INFORMATION_MESSAGE,getWindowIcon());
-//            }
         }
         else if(source instanceof SheetWorker){
             refreshProgressBar();
-//            if(((SheetWorker)source).getProgress() == 100){
-//                JOptionPane.showMessageDialog(this, "All requested emails sent!", "Pritzker EHR says:", JOptionPane.INFORMATION_MESSAGE,getWindowIcon());
-//            }
         }
     }
 
@@ -303,18 +289,16 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
             namesList[i] = (String) jtR.getValueAt(i, 1);
             emailList[i] = (String) jtR.getValueAt(i, 2);
             rowList[i] = jtR.getValueAt(i, 3).toString();
-            //System.out.println(emailList[jtR.convertRowIndexToModel(i)]);
         }
 
         int choice = JOptionPane.CANCEL_OPTION;
         for (int i = 0; i < datesList.length; i++) {
             String msg = sheetsHandler.getReceiptEmailText();
-            msg = msg.replaceAll("\\[INTERVIEWEE NAME\\]",getFirstName(namesList[i]));//namesList[i].split(" ")[0]
+            msg = msg.replaceAll("\\[INTERVIEWEE NAME\\]",getFirstName(namesList[i]));
             msg = msg.replaceAll("\\[HOSTING DATE\\]",datesList[i]);
             msg = msg.replaceAll("\\[PREFERENCE TABLE\\]",sheetsHandler.getHTMLPreferenceTable(sheetsHandler.getUpcomingReceiptArray(),i));
             msg = msg.replaceAll("\\[SIGNATURE\\]",signatureField.getText());
             JTextPane msgPane = new JTextPane();
-            //msgPane.setPreferredSize(new Dimension(200, 300));
             msgPane.setContentType("text/html");
 
             msgPane.setText(msg);
@@ -369,17 +353,12 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
                 SwingWorker emailWorker = new EmailWorker("Pritzker Hosting Confirmation", emailList[i], null, msg, (SheetWorker)sheetWorker);
                 emailWorker.addPropertyChangeListener(this);
                 emailWorker.execute();
-                //buttonPanel.revalidate();
-                //buttonPanel.repaint();
             }
         }
         sheetsHandler.refresh();
         requestReceivedPanel.removeAll();
         JScrollPane jspR = new JScrollPane(jtR, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         requestReceivedPanel.add(jspR);
-//        if (emailList.length > 0) { //&& (choice == JOptionPane.OK_OPTION || launchAll)
-//            JOptionPane.showMessageDialog(this, "All requested emails sent!", "Pritzker Hosting Bot says:", JOptionPane.INFORMATION_MESSAGE);
-//        }
         refreshBottomPanel();
         pack();
     }
@@ -415,7 +394,6 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
             intNamesList[i] = (String) jtP.getValueAt(i, 3);
             intEmailList[i] = (String) jtP.getValueAt(i, 4);
             rowList[i] = jtP.getValueAt(i, 5).toString();
-            //System.out.printf("%s\t%s\t%s\t%s\t%s\n", hostNamesList[i], hostEmailList[i], datesList[i], intNamesList[i], intEmailList[i]);
         }
         String[][] net = new String[][]{intNamesList, datesList, intEmailList, hostNamesList, hostEmailList};
         boolean proceed = true;
@@ -423,7 +401,6 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
         for (int i = 0; i < sheetsHandler.numberForPairing(); i++) {
             boolean completeRow = true;
             for (int j = 0; j < 5; j++) {
-                //System.out.println(i + "," + j);
                 if (net[j][i] == null || net[j][i].equals("")) {
                     completeRow = false;
                     break;
@@ -433,14 +410,13 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
                 viableIndices.add(i);
             }
         }
-        //System.out.println("VC:" + viableIndices.size());
         if (proceed && viableIndices.size() > 0) {
             int choice = JOptionPane.CANCEL_OPTION;
             double percentComplete = 0;
             for (int i = 0; i < viableIndices.size(); i++) {
                 int k = viableIndices.get(i);
                 String msg = sheetsHandler.getPairingEmailText();
-                msg = msg.replaceAll("\\[INTERVIEWEE NAME\\]",getFirstName(intNamesList[k]));//intNamesList[k].split(" ")[0]
+                msg = msg.replaceAll("\\[INTERVIEWEE NAME\\]",getFirstName(intNamesList[k]));
                 msg = msg.replaceAll("\\[HOSTING DATE\\]",datesList[k]);
                 msg = msg.replaceAll("\\[HOST NAME\\]",hostNamesList[k]);
                 msg = msg.replaceAll("\\[SIGNATURE\\]",signatureField.getText());
@@ -506,17 +482,12 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
                     SwingWorker emailWorker = new EmailWorker("Pritzker Hosting Info", intEmailList[k], hostEmailList[k], msg, (SheetWorker)sheetWorker);
                     emailWorker.addPropertyChangeListener(this);
                     emailWorker.execute();
-                    //buttonPanel.repaint();
                 }
             }
             sheetsHandler.refresh();
             tellIntervieweesPanel.removeAll();
             JScrollPane jspP = new JScrollPane(jtP, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            //jspP.setVisible(true);
             tellIntervieweesPanel.add(jspP);
-//            if (datesList.length > 0) { //&& choice == JOptionPane.OK_OPTION || launchAll
-//                JOptionPane.showMessageDialog(this, "All requested emails sent!", "Pritzker Hosting Bot says:", JOptionPane.INFORMATION_MESSAGE);
-//            }
             refreshBottomPanel();
             pack();
         }
@@ -531,7 +502,6 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
      * of important interviewee data in the sheet.</p>
      */
     private void saveTablesToDoc(){
-        //System.out.println("saving to doc button clicked");
         buttonPanel.removeAll();
         buttonPanel.add(progressBar);
         buttonPanel.revalidate();
@@ -542,10 +512,7 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
                 Object tableObject = jtR.getModel().getValueAt(i, j);
                 Object dataObject = sheetsHandler.getReceiptTableValueFromSheet(i, j);
                 if (!tableObject.equals(dataObject)) {
-                    ///nbrWritesTotal++;
-                    //System.out.println("[" + i + "," + j + "]: " + tableObject + " != " + dataObject);
                     String range = sheetsHandler.getReceiptTableValueSheetRange(i, j);
-                    //System.out.println("edit: " + range);
                     SwingWorker sheetEditor = new SheetWorker(range, tableObject.toString(), sheetsHandler);
                     sheetEditor.addPropertyChangeListener(this);
                     sheetEditor.execute();
@@ -558,10 +525,7 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
                 Object tableObject = jtP.getModel().getValueAt(i, j);
                 Object dataObject = sheetsHandler.getPairingTableValueFromSheet(i, j);
                 if (!tableObject.equals(dataObject)) {
-                    ///nbrWritesTotal++;
-                    //System.out.println("[" + i + "," + j + "]: " + tableObject + " != " + dataObject);
                     String range = sheetsHandler.getPairingTableValueSheetRange(i, j);
-                    //System.out.println("edit: " + range);
                     SwingWorker sheetEditor = new SheetWorker(range, tableObject.toString(), sheetsHandler);
                     sheetEditor.addPropertyChangeListener(this);
                     sheetEditor.execute();
@@ -574,10 +538,7 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
                 Object tableObject = jtI.getModel().getValueAt(i, j);
                 Object dataObject = sheetsHandler.getIgnoredTableValueFromSheet(i, j);
                 if (!tableObject.equals(dataObject)) {
-                    ///nbrWritesTotal++;
-                    //System.out.println("[" + i + "," + j + "]: " + tableObject + " != " + dataObject);
                     String range = sheetsHandler.getIgnoredTableValueSheetRange(i, j);
-                    //System.out.println("edit: " + range);
                     SwingWorker sheetEditor = new SheetWorker(range, tableObject.toString(), sheetsHandler);
                     sheetEditor.addPropertyChangeListener(this);
                     sheetEditor.execute();
@@ -590,10 +551,7 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
                 Object tableObject = jtD.getModel().getValueAt(i, j);
                 Object dataObject = sheetsHandler.getDoneTableValueFromSheet(i, j);
                 if (!tableObject.equals(dataObject)) {
-                    ///nbrWritesTotal++;
-                    //System.out.println("[" + i + "," + j + "]: " + tableObject + " != " + dataObject);
                     String range = sheetsHandler.getDoneTableValueSheetRange(i, j);
-                    //System.out.println("edit: " + range);
                     SwingWorker sheetEditor = new SheetWorker(range, tableObject.toString(), sheetsHandler);
                     sheetEditor.addPropertyChangeListener(this);
                     sheetEditor.execute();
@@ -601,8 +559,6 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
             }
         }
         sheetsHandler.refresh();
-        //System.out.println("save to doc code finished");
-        //refreshBottomPanel();
     }
 
     /**
@@ -956,7 +912,6 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
          * @return a boolean representing whether the email was successfully sent (true) or not (false)
          */
         public Boolean doInBackground(){
-            //Thread.sleep((long)(Math.random()*5000));   //added to prevent overloading of email server, leading to crashes
             boolean worked = sendMail(subj, to, cc, msg);
             if(sw != null && worked){
                 sw.execute();
@@ -1085,7 +1040,6 @@ public class PritzkerEHR extends JFrame implements ActionListener, PropertyChang
             }
             emailBody = emailBody.replaceAll("\\[PLEA TABLE\\]",pleaTable);
             emailBody = emailBody.replaceAll("\\[SIGNATURE\\]",sheetsHandler.getPleaEmailSignature());
-            //System.out.println(emailBody);
             askClassMessage.setText(emailBody);
             askClassMessage.setCaretPosition(0);
         }
