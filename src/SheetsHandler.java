@@ -276,7 +276,6 @@ public class SheetsHandler {
                 j++;
             }
         }
-        //forPairing = j;
         String[] titlesTight = new String[] {"Host Name","Host Emails","Hosting Date","Interviewee Name","Interviewee Email",""};
         JTable jtable = new JTable(upcomingArrayTight,titlesTight) {
             @Override
@@ -385,7 +384,6 @@ public class SheetsHandler {
             case 0: sheetCol=4; break;
             case 1: sheetCol=1; break;
             case 2: sheetCol=5; break;
-            //case 3: sheetCol=13; break;
             default: throw new IllegalArgumentException("tableModelCol index "+tableModelCol);
         }
         return upcomingReceiptArray[tableModelRow][sheetCol];
@@ -417,7 +415,6 @@ public class SheetsHandler {
             case 2: sheetCol=4; break;
             case 3: sheetCol=1; break;
             case 4: sheetCol=5; break;
-            //case 5: sheetCol=13; break;
             default: throw new IllegalArgumentException("tableModelCol index "+tableModelCol);
         }
         return upcomingPairingArray[tableModelRow][sheetCol];
@@ -447,7 +444,6 @@ public class SheetsHandler {
             case 0: sheetCol=4; break;
             case 1: sheetCol=1; break;
             case 2: sheetCol=5; break;
-            //case 3: sheetCol=13; break;
             default: throw new IllegalArgumentException("tableModelCol index "+tableModelCol);
         }
         return ignoredRequestArray[tableModelRow][sheetCol];
@@ -479,7 +475,6 @@ public class SheetsHandler {
             case 2: sheetCol=4; break;
             case 3: sheetCol=1; break;
             case 4: sheetCol=5; break;
-            //case 5: sheetCol=13; break;
             default: throw new IllegalArgumentException("tableModelCol index "+tableModelCol);
         }
         return doneRequestArray[tableModelRow][sheetCol];
@@ -500,7 +495,6 @@ public class SheetsHandler {
             case 0: sheetCol=4; break;
             case 1: sheetCol=1; break;
             case 2: sheetCol=5; break;
-            //case 3: sheetCol=13; break;
             default: throw new IllegalArgumentException("tableModelCol index "+tableModelCol);
         }
         range += indexToLetter[sheetCol];
@@ -525,7 +519,6 @@ public class SheetsHandler {
             case 2: sheetCol=4; break;
             case 3: sheetCol=1; break;
             case 4: sheetCol=5; break;
-            //case 5: sheetCol=13; break;
             default: throw new IllegalArgumentException("tableModelCol index "+tableModelCol);
         }
         range += indexToLetter[sheetCol];
@@ -548,7 +541,6 @@ public class SheetsHandler {
             case 0: sheetCol=4; break;
             case 1: sheetCol=1; break;
             case 2: sheetCol=5; break;
-            //case 3: sheetCol=13; break;
             default: throw new IllegalArgumentException("tableModelCol index "+tableModelCol);
         }
         range += indexToLetter[sheetCol];
@@ -573,7 +565,6 @@ public class SheetsHandler {
             case 2: sheetCol=4; break;
             case 3: sheetCol=1; break;
             case 4: sheetCol=5; break;
-            //case 5: sheetCol=13; break;
             default: throw new IllegalArgumentException("tableModelCol index "+tableModelCol);
         }
         range += indexToLetter[sheetCol];
@@ -898,7 +889,6 @@ public class SheetsHandler {
                         int choice = JOptionPane.showConfirmDialog(pritzkerEHR, "Suppress future unparseable date warnings?", "Pritzker EHR says:", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, pritzkerEHR.getWindowIcon());
                         if (choice == JOptionPane.YES_OPTION) {
                             suppressWarnings = true;
-                            //continue;
                         }
                     }
                 }
